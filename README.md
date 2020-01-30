@@ -1,4 +1,4 @@
-# sse-live-class
+# sse-video-benben   一个node + vue +el 的视频程序
 
 ## Project setup
 ```
