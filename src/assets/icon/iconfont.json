@@ -1,0 +1,44 @@
+{
+  "id": "1620439",
+  "name": "no name",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "584826",
+      "name": "运行中",
+      "font_class": "yunxingzhong",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "4657393",
+      "name": "仪表盘",
+      "font_class": "yibiaopan",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "7228266",
+      "name": "等待",
+      "font_class": "dengdai",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "10061222",
+      "name": "暂停",
+      "font_class": "zanting",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "12844272",
+      "name": "m_bom",
+      "font_class": "m_bom",
+      "unicode": "e71e",
+      "unicode_decimal": 59166
+    }
+  ]
+}
