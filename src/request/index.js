@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = "http://47.105.208.216:7050/api/"
+const baseUrl = "http://192.168.31.24:8088/"
 axios.defaults.timeout = 30 * 1000;
 axios.defaults.responseType = 'json';
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';

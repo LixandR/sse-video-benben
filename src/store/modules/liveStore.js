@@ -22,7 +22,7 @@ const schedule = {
         getLiveClassData({ commit }, payload) {
             return new Promise((resolve, reject) => {
                 liveApi.getLiveClassData(payload).then(response => {
-                    resolve(response);
+                    response;
                 }).catch(() => {
                     reject();
                 });

@@ -1,242 +1,124 @@
 <template>
-  <div style="width:1380px;margin:10px auto;">
-    <div class="titleText">直播中</div>
-    <el-row :gutter="10">
-      <el-col v-if="liveings.length<=0" :span="24" class="cardBoxBorder">
-        <div class="cardBox cardBox-nomsg">暂无数据</div>
-      </el-col>
-      <el-col v-for="(claz,index) in liveings" :key="index" class="cardBoxBorder">
-        <a :href="claz.liveURL" target="_blank" @click="saveLievCredis(0,claz.meetingId)">
-          <div class="cardBox" :class="judgeBgColor(claz)">
-            <el-row>
-              <el-col :span="7" class="titleLeft">名称：</el-col>
-              <el-col :span="12" class="contentRight">{{claz.liveTopic}}</el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="7" class="titleLeft">老师：</el-col>
-              <el-col :span="12" class="contentRight">{{claz.teacherName}}</el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="7" class="titleLeft">时间：</el-col>
-              <el-col :span="12" class="contentRight">{{claz.time}}</el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="7" class="titleLeft">状态：</el-col>
-              <el-col :span="12" class="contentRight">{{claz.liveZt}}</el-col>
-            </el-row>
-          </div>
-        </a>
-      </el-col>
-    </el-row>
-    <!--科目-->
-    <el-row style="margin-top:15px;">
-      <el-col :span="24">
-        <el-tabs
-          type="card"
-          @tab-click="showSubjectData"
-          v-model="defaultActiveTab"
-          ref="classItemsTab"
-          stretch="true"
-          id="classItemsTab"
-        >
-          <el-tab-pane
-            :label="subject.value"
-            :name="subject.key"
-            v-for="(subject) in subjects"
-            :key="subject.key"
-            style="margin-top:-10px;"
-          >
-            <div class="titleText">待开播</div>
-            <el-row :gutter="10">
-              <el-col v-if="unLives.length<=0" class="cardBoxBorder">
-                <div class="cardBox cardBox-nomsg" :class="subject.key+'Bg'">暂无数据</div>
-              </el-col>
-              <el-col v-for="(claz,index) in unLives" :key="index" class="cardBoxBorder">
-                <a href="javascript:;" @click="checkTime(claz,index)" :id="index">
-                  <div class="cardBox" :class="subject.key+'Bg'">
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">名称：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.liveTopic}}</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">老师：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.teacherName}}</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">时间：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.bt}}</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">状态：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.liveZt}}</el-col>
-                    </el-row>
-                  </div>
-                </a>
-              </el-col>
-            </el-row>
-            <div class="titleText">观看回放</div>
+  <div id="app">
+    <el-container style="height: 100%; border: 1px solid #eee;" class="my-container">
+      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+        <el-menu :default-openeds="['1']" default-active="1-1">
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-upload"></i>初中数学
+            </template>
+            <el-menu-item-group>
+              <template slot="title">七年级</template>
+              <el-menu-item index="1-1" @click="getLiveClassData(18)">七年级(上)</el-menu-item>
+              <el-menu-item index="1-2" @click="getLiveClassData(34)">七年级(下)</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <template slot="title">八年级</template>
+              <el-menu-item index="1-3" @click="getLiveClassData(36)">八年级(上)</el-menu-item>
+              <el-menu-item index="1-4" @click="getLiveClassData(35)">八年级(下)</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <template slot="title">九年级</template>
+              <el-menu-item index="1-5" @click="getLiveClassData(37)">九年级(上)</el-menu-item>
+              <el-menu-item index="1-6" @click="getLiveClassData(38)">九年级(下)</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-upload"></i>初中英语
+            </template>
+            <el-menu-item-group>
+              <template slot="title">七年级</template>
+              <el-menu-item index="2-1" @click="getLiveClassData(110)">七年级(上)</el-menu-item>
+              <el-menu-item index="2-2" @click="getLiveClassData(111)">七年级(下)</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <template slot="title">八年级</template>
+              <el-menu-item index="2-3" @click="getLiveClassData(112)">八年级(上)</el-menu-item>
+              <el-menu-item index="2-4" @click="getLiveClassData(113)">八年级(下)</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <template slot="title">九年级</template>
+              <el-menu-item index="2-5" @click="getLiveClassData(114)">九年级</el-menu-item>
+              <!-- <el-menu-item index="2-6" @click="getLiveClassData(18)">九年级(下)</el-menu-item> -->
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-upload"></i>初中物理
+            </template>
+            <el-menu-item-group>
+              <template slot="title">八年级</template>
+              <el-menu-item index="3-3" @click="getLiveClassData(19)">八年级(上)</el-menu-item>
+              <el-menu-item index="3-4" @click="getLiveClassData(23)">八年级(下)</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <template slot="title">九年级</template>
+              <el-menu-item index="3-5" @click="getLiveClassData(33)">九年级(上)</el-menu-item>
+              <!-- <el-menu-item index="3-6" @click="getLiveClassData(18)">九年级(下)</el-menu-item> -->
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-upload"></i>初中化学
+            </template>
+            <el-menu-item-group>
+              <template slot="title">九年级</template>
+              <el-menu-item index="4-5" @click="getLiveClassData(1  1)">九年级(上)</el-menu-item>
+              <el-menu-item index="4-6" @click="getLiveClassData(12)">九年级(下)</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
 
-            <el-row :gutter="10">
-              <el-col v-if="endLives.length<=0" class="cardBoxBorder">
-                <div class="cardBox cardBox-nomsg" :class="subject.key+'Bg'">暂无数据</div>
-              </el-col>
-              <el-col v-for="(claz,index) in endLives" :key="index" class="cardBoxBorder">
-                <a :href="claz.liveURL" target="_blank" @click="saveLievCredis(1,claz.meetingId)">
-                  <div class="cardBox" :class="subject.key+'Bg'">
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">名称：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.liveTopic}}</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">老师：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.teacherName}}</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">时间：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.bt}}</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="7" class="titleLeft">状态：</el-col>
-                      <el-col :span="12" class="contentRight">{{claz.liveZt}}</el-col>
-                    </el-row>
-                  </div>
-                </a>
-              </el-col>
-            </el-row>
-          </el-tab-pane>
-        </el-tabs>
-      </el-col>
-    </el-row>
+      <el-container>
+        <el-main>
+          <el-table :data="tableDate">
+            <el-table-column align="center" prop="name" label="类型" width="300px"></el-table-column>
+            <el-table-column prop="desc" align="center" label="名称" width="300px"></el-table-column>
+            <el-table-column label="操作" prop="" align="center">
+            </el-table-column>
+          </el-table>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
+import liveApi from "@/api/liveApi";
 export default {
   name: "DashBoard",
   data() {
     return {
       defaultActiveTab: "",
-      unLives: [], //未开始直播
-      liveings: [], //正在直播
-      endLives: [], //结果直播
-      subjects: [], //开播科目
-      allLive: [],
-      showClasses: [],
-      liveStatus: {
-        "0": "待直播",
-        "1": "直播中",
-        "2": "观看回放"
-      },
-      dynacInterval: null
+      dynacInterval: null,
+      tableDate: []
     };
   },
   methods: {
-  judgeBgColor(data){
-    // console.log(data);
-    // console.log(this.subjects);
-    for(var s of this.subjects){
-      if(s.value == data.subject){
-        return s.key + "Bg";
-      }
-    }
-  },
-    checkTime(row, index) {
-      //target="_blank"
-      let ct = parseInt(new Date().getTime() / 1000);
-      if (ct - 15*60 < parseInt(row.beginTime)) {
-        this.$message({
-          message: "请于" + row.bt+"观看直播",
-          type: "warning"
-        });
-        return false;
-      } else {
-        //liveURL;
-        var aMark = document.getElementById(index + "");
-        aMark.href = row.liveURL;
-        aMark.target = "_blank";
-        aMark.click();
-      }
-    },
-    showSubjectData(tab, event) {
-      let subjectName = tab.name;
-      this.getSubjectClaz(subjectName);
-    },
-    getSubjectClaz(subjectName) {
+    async getLiveClassData(id) {
       let _this = this;
-      _this.unLives = [];
-      _this.endLives = [];
-      let subjectClass = _this.allLive[subjectName];
-      subjectClass.forEach(row => {
-        // liveStatus=0
-        if (row.liveStatus === 0) {
-          row.liveZt = "待开播";
-          row.bt = _this.utils.formatDate(row.beginTime);
-          _this.unLives.push(row);
-        }
-        if (row.liveStatus === 2) {
-          row.liveZt = "观看回放";
-          row.bt = _this.utils.formatDate(row.beginTime);
-          _this.endLives.push(row);
-        }
-      });
-    },
-    async getLiveClassData() {
-      let _this = this;
-      const studentId = _this.$store.getters["loginStore/getStudentId"];
-      const result = await _this.$store.dispatch("liveStore/getLiveClassData", {
-        studentId: studentId
-      });
-      if (result.success) {
-        const data = result.data;
-        _this.subjects = data.subject;
-        _this.allLive = data.allLive;
-        _this.defaultActiveTab = _this.subjects[0].key;
-        _this.getSubjectClaz(_this.subjects[0].key);
-        _this.liveings = [];
-        const liveingsClass = data.living;
-        if (liveingsClass != null && liveingsClass.length > 0) {
-          liveingsClass.forEach(row => {
-            row.liveZt = "直播中";
-            let bt = _this.utils.formatDate(row.beginTime);
-            let ed = _this.utils.formatDate(row.endTime).substring(6);
-            row.time = bt + "-" + ed;
-            _this.liveings.push(row);
-          });
-        }
-      } else {
-        _this.$message.error("暂无数据");
-      }
-    },
-    dyncResfresh() {
-      let _this = this;
-      _this.dynacInterval = setInterval(function() {
-        _this.getLiveClassData();
-      }, 1000 * 60);
-    },
-    async saveLievCredis(liveStatus, meetingId) {
-      let _this = this;
-      let userId = _this.$store.getters["loginStore/getStudentId"];
-      const result = await _this.$store.dispatch("liveStore/saveLievCredis", {
-        userid: userId,
-        type: liveStatus,
-        meetingId: meetingId
-      });
-      if (result.success) {
-        _this.$message({
-          type: "success",
-          message: result.msg
-        });
-      }
+      console.log(id);
+      liveApi
+        .findVideos({ id: id })
+        .then(response => {
+          console.log(response);
+          _this.tableDate = response;
+        })
+        .catch(() => {});
     }
   },
   mounted() {
     document.getElementsByTagName("body")[0].className = "";
 
     let _this = this;
-    _this.getLiveClassData();
-    _this.dyncResfresh();
+    _this.getLiveClassData(18);
+    // _this.dyncResfresh();
     _this.$nextTick(() => {
       let tabs = _this.$refs.classItemsTab;
+      document.getElementsByClassName("my-container")[0].style.height =
+        document.documentElement.clientHeight + "px";
     });
   },
   beforeDestroy() {
@@ -264,7 +146,7 @@ a:hover {
   text-align: left;
 }
 
-.cardBoxBorder{
+.cardBoxBorder {
   width: 250px;
 }
 .cardBox {
@@ -277,7 +159,7 @@ a:hover {
   margin: 5px 0;
   padding: 7px;
 }
-.cardBox-nomsg{
+.cardBox-nomsg {
   text-align: center;
   font-size: 30px;
   line-height: 100px;
@@ -288,22 +170,22 @@ a:hover {
   background-color: #ff9c3a;
 }
 .mathBg {
-  background-color: #008E57;
+  background-color: #008e57;
 }
 .geographyBg {
-  background-color: #00489D;
+  background-color: #00489d;
 }
 .chemistryBg {
-  background-color: #00A4C5;
+  background-color: #00a4c5;
 }
 .wenzongBg {
   background-color: #ff9c3a;
 }
 .physicsBg {
-  background-color: #00489D;
+  background-color: #00489d;
 }
 .englishBg {
-  background-color: #5A4398;
+  background-color: #5a4398;
 }
 .politicsBg {
   background-color: #ff9c3a;
@@ -320,8 +202,8 @@ a:hover {
 /* 标题样式 */
 .titleText {
   /* background-color: #000; */
-  color: #01764A;
-  border-bottom: 4px solid #008F59;
+  color: #01764a;
+  border-bottom: 4px solid #008f59;
   margin: 6px 0 2px 2px;
   padding: 0 10px;
   line-height: 25px;

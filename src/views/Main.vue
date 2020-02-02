@@ -80,8 +80,8 @@ export default {
   name: "Main",
   data() {
     return {
-      password: "",
-      username: ""
+      password: "666940",
+      username: "13398666940"
     };
   },
   methods: {

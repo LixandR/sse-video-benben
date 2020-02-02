@@ -8,6 +8,11 @@ import store from "@/store"
 import router from '@/router'
 import utils from '@/util';
 import '@/assets/css/login.min.css'
+import '@/assets/css/base.css'
+import '@/assets/css/checkout.css'
+import '@/assets/css/login.css'
+import '@/assets/css/product.css'
+
 Vue.config.productionTip = false
 Vue.prototype.utils = utils
 Vue.use(ElementUI, {
